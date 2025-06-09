@@ -1,0 +1,15 @@
+//TECN007A JOB  NOTIFY=TECN007                                          00010000
+//STEP01   EXEC PGM=IDCAMS                                              00020000
+//SYSPRINT DD   SYSOUT=*                                                00030000
+//SYSIN    DD   *                                                       00040000
+  DELETE TECN007.MASTER.PREMIUM.KSDS                                    00041003
+  DEFINE CLUSTER( -                                                     00050001
+   NAME(TECN007.MASTER.PREMIUM.KSDS) -                                  00060000
+   TRACK(10,10)                      -                                  00070000
+   VOLUME(ZAPRD7)                    -                                  00080000
+   KEYS(10,0)                        -                                  00081001
+   CONTROLINTERVALSIZE(512)          -                                  00090000
+   RECORDSIZE(100,100)               -                                  00100002
+   INDEXED)                                                             00110000
+/*                                                                      00120000
+

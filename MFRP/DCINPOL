@@ -1,0 +1,38 @@
+      ******************************************************************
+      * DCLGEN TABLE(TECN007.INSURANCE_POLICY)                         *
+      *        LIBRARY(TECN007.FINAL.DB2.PDS(DCLINPOL))                *
+      *        ACTION(REPLACE)                                         *
+      *        LANGUAGE(COBOL)                                         *
+      *        NAMES(HV-)                                              *
+      *        QUOTE                                                   *
+      *        COLSUFFIX(YES)                                          *
+      * ... IS THE DCLGEN COMMAND THAT MADE THE FOLLOWING STATEMENTS   *
+      ******************************************************************
+           EXEC SQL DECLARE TECN007.INSURANCE_POLICY TABLE
+           ( POLICY_ID                      CHAR(5) NOT NULL,
+             POLICY_CODE                    CHAR(10),
+             POLICY_NAME                    CHAR(25),
+             TYPE_OF_POLICY                 CHAR(10),
+             TERM                           CHAR(7),
+             POLICY_AMOUNT                  CHAR(13)
+           ) END-EXEC.
+      ******************************************************************
+      * COBOL DECLARATION FOR TABLE TECN007.INSURANCE_POLICY           *
+      ******************************************************************
+       01  DCLINSURANCE-POLICY.
+      *                       POLICY_ID
+           10 HV-POLICY-ID         PIC X(5).
+      *                       POLICY_CODE
+           10 HV-POLICY-CODE       PIC X(10).
+      *                       POLICY_NAME
+           10 HV-POLICY-NAME       PIC X(25).
+      *                       TYPE_OF_POLICY
+           10 HV-TYPE-OF-POLICY    PIC X(10).
+      *                       TERM
+           10 HV-TERM              PIC X(7).
+      *                       POLICY_AMOUNT
+           10 HV-POLICY-AMOUNT     PIC X(13).
+      ******************************************************************
+      * THE NUMBER OF COLUMNS DESCRIBED BY THIS DECLARATION IS 6       *
+      ******************************************************************
+

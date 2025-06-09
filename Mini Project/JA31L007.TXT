@@ -1,0 +1,51 @@
+//TECN007A JOB NOTIFY=&SYSUID                                           00010000
+//STEP1    EXEC PGM=IEFBR14                                             00011002
+//SYSIN    DD DUMMY                                                     00012002
+//SYSPRINT DD SYSOUT=*                                                  00013002
+//DD1      DD DSN=TECN007.L1L.STUDENT.PS3,                              00014002
+//         DISP=(MOD,DELETE,DELETE),                                    00015002
+//         SPACE=(TRK,(1,1)),                                           00016002
+//         VOLUME=SER=ZAPRD7,                                           00017002
+//         DCB=(LRECL=80,BLKSIZE=800,RECFM=FB,DSORG=PS)                 00018002
+//DD2      DD DSN=TECN007.L1L.STUDENT.PS4,                              00019002
+//         DISP=(MOD,DELETE,DELETE),                                    00019102
+//         SPACE=(TRK,(1,1)),                                           00019202
+//         VOLUME=SER=ZAPRD7,                                           00019302
+//         DCB=(LRECL=80,BLKSIZE=800,RECFM=FB,DSORG=PS)                 00019402
+//STEP2    EXEC PGM=SORT                                                00020002
+//SYSOUT   DD SYSOUT=*                                                  00030000
+//SYSPRINT DD SYSOUT=*                                                  00040002
+//SORTIN   DD DSN=TECN007.L1L.STUDENT.PS2,DISP=SHR                      00041002
+//SORTOF01 DD DSN=TECN007.L1L.STUDENT.PS3,                              00042002
+//         DISP=(NEW,CATLG,DELETE),                                     00043002
+//         SPACE=(TRK,(1,1)),                                           00044002
+//         VOLUME=SER=ZAPRD7,                                           00045002
+//         DCB=(LRECL=80,BLKSIZE=800,RECFM=FB,DSORG=PS)                 00046002
+//SORTOF02 DD DSN=TECN007.L1L.STUDENT.PS4,                              00047002
+//         DISP=(NEW,CATLG,DELETE),                                     00048002
+//         SPACE=(TRK,(1,1)),                                           00049002
+//         VOLUME=SER=ZAPRD7,                                           00049102
+//         DCB=(LRECL=80,BLKSIZE=800,RECFM=FB,DSORG=PS)                 00049202
+//SYSIN    DD *                                                         00049302
+    SORT FIELDS=COPY                                                    00049402
+    OUTFIL FILES=01,STARTREC=1,SAMPLE=2                                 00049502
+    OUTFIL FILES=02,STARTREC=2,SAMPLE=2                                 00049602
+/*                                                                      00049702
+//STEP3 EXEC PGM=SORT,COND=(00,NE,STEP2)                                00050002
+//SYSOUT   DD SYSOUT=*                                                  00060002
+//SYSPRINT DD SYSOUT=*                                                  00070002
+//SORTIN   DD DSN=TECN007.L1L.STUDENT.PS3,DISP=SHR                      00080002
+//SORTOUT  DD DSN=TECN007.L1L.STUDENT.PS3,DISP=SHR                      00090002
+//SYSIN    DD *                                                         00100002
+    SORT FIELDS=COPY                                                    00110002
+    INREC OVERLAY=(27:C'SPLIT')                                         00120002
+/*                                                                      00130002
+//STEP4 EXEC PGM=SORT,COND=(00,NE,STEP2)                                00140002
+//SYSOUT   DD SYSOUT=*                                                  00150002
+//SYSPRINT DD SYSOUT=*                                                  00160002
+//SORTIN   DD DSN=TECN007.L1L.STUDENT.PS4,DISP=SHR                      00170002
+//SORTOUT  DD DSN=TECN007.L1L.STUDENT.PS4,DISP=SHR                      00180002
+//SYSIN    DD *                                                         00190002
+    SORT FIELDS=COPY                                                    00200002
+    INREC OVERLAY=(27:C'SPLIT')                                         00210002
+/*                                                                      00220002

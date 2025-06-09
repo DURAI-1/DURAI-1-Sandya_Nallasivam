@@ -1,0 +1,57 @@
+      ******************************************************************
+      * DCLGEN TABLE(TECN007.PREMIUM_DETAILS)                          *
+      *        LIBRARY(TECN007.MFRP.PDS(DCLPRM))                       *
+      *        ACTION(REPLACE)                                         *
+      *        LANGUAGE(COBOL)                                         *
+      *        NAMES(HV1-)                                             *
+      *        QUOTE                                                   *
+      *        COLSUFFIX(YES)                                          *
+      * ... IS THE DCLGEN COMMAND THAT MADE THE FOLLOWING STATEMENTS   *
+      ******************************************************************
+           EXEC SQL DECLARE TECN007.PREMIUM_DETAILS TABLE
+           ( HOLDER_ID                      CHAR(5) NOT NULL,
+             HOLDER_NAME                    CHAR(10),
+             POLICY_ID                      CHAR(5) NOT NULL,
+             POLICY_CODE                    CHAR(10),
+             POLICY_NUMBER                  VARCHAR(10),
+             POLICY_AMOUNT                  CHAR(13),
+             PREMIUM_AMOUNT                 CHAR(13),
+             PREMIUM_RECEIVED_DATE          DATE,
+             BALANCE_AMOUNT                 CHAR(13),
+             NEXT_PREMIUM_DUE_DATE          DATE
+           ) END-EXEC.
+      ******************************************************************
+      * COBOL DECLARATION FOR TABLE TECN007.PREMIUM_DETAILS            *
+      ******************************************************************
+       01  DCLPREMIUM-DETAILS.
+      *                       HOLDER_ID
+           10 HV1-HOLDER-ID        PIC X(5).
+      *                       HOLDER_NAME
+           10 HV1-HOLDER-NAME      PIC X(10).
+      *                       POLICY_ID
+           10 HV1-POLICY-ID        PIC X(5).
+      *                       POLICY_CODE
+           10 HV1-POLICY-CODE      PIC X(10).
+           10 HV1-POLICY-NUMBER.
+      *                       POLICY_NUMBER LENGTH
+              49 HV1-POLICY-NUMBER-LEN
+                 PIC S9(4) USAGE COMP.
+      *                       POLICY_NUMBER
+              49 HV1-POLICY-NUMBER-TEXT
+                 PIC X(10).
+      *                       POLICY_AMOUNT
+           10 HV1-POLICY-AMOUNT    PIC X(13).
+      *                       PREMIUM_AMOUNT
+           10 HV1-PREMIUM-AMOUNT   PIC X(13).
+      *                       PREMIUM_RECEIVED_DATE
+           10 HV1-PREMIUM-RECEIVED-DATE
+              PIC X(10).
+      *                       BALANCE_AMOUNT
+           10 HV1-BALANCE-AMOUNT   PIC X(13).
+      *                       NEXT_PREMIUM_DUE_DATE
+           10 HV1-NEXT-PREMIUM-DUE-DATE
+              PIC X(10).
+      ******************************************************************
+      * THE NUMBER OF COLUMNS DESCRIBED BY THIS DECLARATION IS 10      *
+      ******************************************************************
+

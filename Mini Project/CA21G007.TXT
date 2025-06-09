@@ -1,0 +1,15 @@
+       IDENTIFICATION DIVISION.                                         00010000
+       PROGRAM-ID. CA21G007.                                            00020000
+       DATA DIVISION.                                                   00030000
+       LINKAGE SECTION.                                                 00040000
+       77 LK77-TOT-M PIC 9(03)V9(02).                                   00050001
+       77 LK77-TOT-P PIC 9(03).                                         00060005
+       77 LK77-SUB1  PIC 9(02)V9(02).                                   00070001
+       77 LK77-SUB2  PIC 9(02)V9(02).                                   00080001
+       77 LK77-SUB3  PIC 9(02)V9(02).                                   00090001
+       PROCEDURE DIVISION USING LK77-TOT-M LK77-TOT-P LK77-SUB1         00100000
+           LK77-SUB2 LK77-SUB3.                                         00110002
+           COMPUTE LK77-TOT-M = LK77-SUB1 + LK77-SUB2 + LK77-SUB3.      00120002
+           COMPUTE LK77-TOT-P = ( LK77-TOT-M / 300 ) * 100.             00130002
+           EXIT.                                                        00140000
+           GOBACK.                                                      00150000

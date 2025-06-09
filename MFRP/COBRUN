@@ -1,0 +1,8 @@
+//TECN007A JOB NOTIFY=&SYSUID                                           00010002
+//RUN      EXEC PGM=REPORT1               --> MEMBER NAME               00040030
+//STEPLIB  DD DSN=TECN007.SANDYA.COBOL.LOADLIB,DISP=SHR                 00050016
+//SYSPRINT DD SYSOUT=*                                                  00060000
+//DD1      DD DSN=TECN007.REPORT.TEMP.PS,DISP=SHR                       00080030
+//DD2      DD DSN=TECN007.REPORT.PS,DISP=SHR                            00095030
+//SYSIN DD DUMMY                                                        00100000
+

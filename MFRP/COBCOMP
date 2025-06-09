@@ -1,0 +1,9 @@
+//TECN007A JOB NOTIFY=&SYSUID                                           00010002
+//JOBPROC JCLLIB ORDER=IBMUSER.ALL1                                     00040000
+//COBCL EXEC IGYWCL,                                                    00050000
+//          PGMLIB=TECN007.SANDYA.COBOL.LOADLIB,                        00060002
+//*          COPYLIB=TXSAD01.COPYLIB.PDS,          --> COPYLIB NAME     00061002
+//          GOPGM=REPORT1                                               00070030
+//COBOL.SYSIN DD DSN=TECN007.MFRTP.PDS(REPORT1),DISP=SHR                00080030
+//*LKED.SYSLIB DD DSN=TECN007.SANDYA.COBOL.LOADLIB(SUBPGM1),DISP=SHR    00090027
+

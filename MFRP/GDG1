@@ -1,0 +1,48 @@
+//TECN007A JOB NOTIFY=&SYSUID                                           00010000
+//STEP001  EXEC PGM=IDCAMS                                              00020000
+//SYSPRINT DD SYSOUT=*                                                  00030000
+//SYSIN    DD *                                                         00040000
+  DELETE TECN007.INSURNCE.POLICY.PS.GDG.*                               00050001
+  DELETE TECN007.INSURNCE.POLICY.PS.GDG                                 00060001
+  DELETE TECN007.PREMIUM.DETAILS.PS.GDG.*                               00070001
+  DELETE TECN007.PREMIUM.DETAILS.PS.GDG                                 00080001
+  DELETE TECN007.PREMIUM.ERROR.OUT.PS.GDG.*                             00090001
+  DELETE TECN007.PREMIUM.ERROR.OUT.PS.GDG                               00100001
+  DELETE TECN007.PREMIUM.TEMP.OUT.PS.GDG.*                              00101001
+  DELETE TECN007.PREMIUM.TEMP.OUT.PS.GDG                                00102001
+  DELETE TECN007.MASTER.PREMIUM.KSDS.GDG.*                              00103001
+  DELETE TECN007.MASTER.PREMIUM.KSDS.GDG                                00104001
+  DELETE TECN007.REPORT.PS.GDG.*                                        00105002
+  DELETE TECN007.REPORT.PS.GDG                                          00106002
+  DEFINE GDG(                             -                             00110000
+  NAME(TECN007.INSURNCE.POLICY.PS.GDG)  -                               00120001
+  LIMIT(10)                                -                            00130000
+  SCRATCH                                 -                             00140000
+  NOEMPTY)                                                              00150000
+  DEFINE GDG(                             -                             00160000
+  NAME(TECN007.PREMIUM.DETAILS.PS.GDG)  -                               00170001
+  LIMIT(10)                                -                            00180000
+  SCRATCH                                 -                             00190000
+  NOEMPTY)                                                              00200000
+  DEFINE GDG(                             -                             00210000
+  NAME(TECN007.PREMIUM.ERROR.OUT.PS.GDG) -                              00220001
+  LIMIT(10)                                -                            00230000
+  SCRATCH                                 -                             00240000
+  NOEMPTY)                                                              00250000
+  DEFINE GDG(                             -                             00251001
+  NAME(TECN007.PREMIUM.TEMP.OUT.PS.GDG) -                               00252001
+  LIMIT(10)                                -                            00253001
+  SCRATCH                                 -                             00254001
+  NOEMPTY)                                                              00255001
+  DEFINE GDG(                             -                             00256001
+  NAME(TECN007.MASTER.PREMIUM.KSDS.GDG) -                               00257001
+  LIMIT(10)                                -                            00258001
+  SCRATCH                                 -                             00259001
+  NOEMPTY)                                                              00259101
+  DEFINE GDG(                             -                             00259202
+  NAME(TECN007.REPORT.PS.GDG) -                                         00259302
+  LIMIT(10)                                -                            00259402
+  SCRATCH                                 -                             00259502
+  NOEMPTY)                                                              00259602
+/*                                                                      00260000
+

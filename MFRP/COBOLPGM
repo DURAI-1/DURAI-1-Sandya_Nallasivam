@@ -1,0 +1,621 @@
+       IDENTIFICATION DIVISION.                                         00010002
+       PROGRAM-ID. COBOLPGM.                                            00020040
+       ENVIRONMENT DIVISION.                                            00030002
+       INPUT-OUTPUT SECTION.                                            00040017
+       FILE-CONTROL.                                                    00050017
+           SELECT TI001-PS                                              00060002
+               ASSIGN TO DD1                                            00070040
+               ACCESS IS SEQUENTIAL                                     00080002
+               ORGANIZATION IS SEQUENTIAL                               00090002
+               FILE STATUS IS WS05-FST-TI001.                           00100019
+           SELECT TI002-PS                                              00110040
+               ASSIGN TO DD2                                            00120040
+               ACCESS IS SEQUENTIAL                                     00130002
+               ORGANIZATION IS SEQUENTIAL                               00140002
+               FILE STATUS IS WS05-FST-TI002.                           00150065
+           SELECT TO001-PS                                              00160041
+               ASSIGN TO DD3                                            00170040
+               ACCESS IS SEQUENTIAL                                     00180041
+               ORGANIZATION IS SEQUENTIAL                               00190041
+               FILE STATUS IS WS05-FST-TO001.                           00200040
+           SELECT TO002-PS                                              00210041
+               ASSIGN TO DD4                                            00220040
+               ACCESS IS SEQUENTIAL                                     00230041
+               ORGANIZATION IS SEQUENTIAL                               00240041
+               FILE STATUS IS WS05-FST-TO002.                           00250040
+           SELECT TO003-KSDS                                            00251041
+               ASSIGN TO DD5                                            00252041
+               ACCESS IS RANDOM                                         00253041
+               ORGANIZATION IS INDEXED                                  00254041
+               RECORD KEY IS TO003-KSDS-KEY                             00254144
+               FILE STATUS IS WS05-FST-TO003.                           00255041
+       DATA DIVISION.                                                   00260002
+       FILE SECTION.                                                    00270002
+       FD TI001-PS.                                                     00280002
+       01 TI001-PS-REC.                                                 00290002
+           05 TI001-POLICY-ID        PIC X(05).                         00300041
+           05 F                      PIC X(01).                         00310041
+           05 TI001-POLICY-CODE      PIC X(10).                         00320041
+           05 F                      PIC X(01).                         00330041
+           05 TI001-POLICY-NAME      PIC X(25).                         00340041
+           05 F                      PIC X(01).                         00350041
+           05 TI001-TYPE-OF-POLICY   PIC X(10).                         00360041
+           05 F                      PIC X(01).                         00370041
+           05 TI001-TERM             PIC X(07).                         00380041
+           05 F                      PIC X(01).                         00390041
+           05 TI001-POLICY-AMOUNT    PIC X(13).                         00391041
+           05 F                      PIC X(25).                         00392041
+       FD TI002-PS.                                                     00400041
+       01 TI002-PS-REC.                                                 00410041
+           05 TI002-HOLDER-ID              PIC X(05).                   00420041
+           05 F                            PIC X(01).                   00430041
+           05 TI002-HOLDER-NAME            PIC X(10).                   00440041
+           05 F                            PIC X(01).                   00450041
+           05 TI002-POLICY-ID              PIC X(05).                   00460041
+           05 F                            PIC X(01).                   00470041
+           05 TI002-POLICY-CODE            PIC X(10).                   00480041
+           05 F                            PIC X(01).                   00490041
+           05 TI002-POLICY-NUMBER          PIC 9(10).                   00500041
+           05 F                            PIC X(01).                   00510041
+           05 TI002-PREMIUM-AMOUNT         PIC 9(10).                   00520041
+           05 F                            PIC X(01).                   00530041
+           05 TI002-PREMIUM-RECEIVED-DATE  PIC X(10).                   00540041
+           05 F                            PIC X(01).                   00550041
+           05 TI002-NEXT-PREMIUM-DUE-DATE  PIC X(10).                   00560041
+           05 F                            PIC X(23).                   00570041
+       FD TO001-PS.                                                     00620041
+       01 TO001-PS-REC.                                                 00630041
+           05 TO001-HOLDER-ID              PIC X(05).                   00630141
+           05 F                            PIC X(01).                   00630241
+           05 TO001-HOLDER-NAME            PIC X(10).                   00630341
+           05 F                            PIC X(01).                   00630441
+           05 TO001-POLICY-ID              PIC X(05).                   00630541
+           05 F                            PIC X(01).                   00630641
+           05 TO001-POLICY-CODE            PIC X(10).                   00630741
+           05 F                            PIC X(01).                   00630841
+           05 TO001-POLICY-NUMBER          PIC 9(10).                   00630941
+           05 F                            PIC X(01).                   00631041
+           05 TO001-PREMIUM-AMOUNT         PIC 9(10).                   00633052
+           05 F                            PIC X(01).                   00634041
+           05 TO001-PREMIUM-RECEIVED-DATE  PIC X(10).                   00635041
+           05 F                            PIC X(01).                   00636041
+           05 TO001-NEXT-PREMIUM-DUE-DATE  PIC X(10).                   00637041
+           05 F                            PIC X(01).                   00638041
+           05 TO001-ERROR-REASON           PIC X(21).                   00639041
+           05 F                            PIC X(51).                   00639152
+       FD TO002-PS.                                                     00639241
+       01 TO002-PS-REC.                                                 00639341
+           05 TO002-HOLDER-ID              PIC X(05).                   00639441
+           05 F                            PIC X(01).                   00639541
+           05 TO002-HOLDER-NAME            PIC X(10).                   00639641
+           05 F                            PIC X(01).                   00639741
+           05 TO002-POLICY-ID              PIC X(05).                   00639841
+           05 F                            PIC X(01).                   00639941
+           05 TO002-POLICY-CODE            PIC X(10).                   00640041
+           05 F                            PIC X(01).                   00650041
+           05 TO002-POLICY-NUMBER          PIC 9(10).                   00651041
+           05 F                            PIC X(01).                   00652041
+           05 TO002-POLICY-AMOUNT          PIC X(13).                   00653055
+           05 F                            PIC X(01).                   00654041
+           05 TO002-PREMIUM-AMOUNT         PIC X(13).                   00655055
+           05 F                            PIC X(01).                   00656041
+           05 TO002-PREMIUM-RECEIVED-DATE  PIC X(10).                   00657041
+           05 F                            PIC X(01).                   00658041
+           05 TO002-BALANCE-AMOUNT         PIC X(13).                   00659055
+           05 F                            PIC X(01).                   00659141
+           05 TO002-NEXT-PREMIUM-DUE-DATE  PIC X(10).                   00659241
+           05 F                            PIC X(42).                   00659366
+       FD TO003-KSDS.                                                   00660065
+       01 TO003-KSDS-REC.                                               00670041
+           05 TO003-KSDS-KEY.                                           00671043
+               10 TO003-HOLDER-ID          PIC X(05).                   00680043
+               10 TO003-POLICY-ID          PIC X(05).                   00700043
+           05 F                            PIC X(01).                   00710041
+           05 TO003-PREMIUM-RECEIVED-DATE  PIC X(10).                   00720041
+           05 F                            PIC X(01).                   00730041
+           05 TO003-POLICY-CODE            PIC X(10).                   00740041
+           05 F                            PIC X(01).                   00750041
+           05 TO003-PREMIUM-AMOUNT         PIC X(13).                   00760055
+           05 F                            PIC X(54).                   00770055
+       WORKING-STORAGE SECTION.                                         00780002
+           EXEC SQL                                                     00780143
+               INCLUDE SQLCA                                            00780251
+           END-EXEC.                                                    00780343
+           EXEC SQL                                                     00781042
+               INCLUDE DCLINPOL                                         00782042
+           END-EXEC.                                                    00783043
+           EXEC SQL                                                     00784042
+               INCLUDE DCLPRM                                           00785042
+           END-EXEC.                                                    00786043
+           EXEC SQL                                                     00787056
+               DECLARE MFRP CURSOR                                      00788056
+               FOR                                                      00789056
+               SELECT                                                   00789156
+                   HOLDER_ID                                            00789263
+                   ,HOLDER_NAME                                         00789363
+                   ,POLICY_ID                                           00789463
+                   ,POLICY_CODE                                         00789568
+                   ,POLICY_NUMBER                                       00789663
+                   ,POLICY_AMOUNT                                       00789763
+                   ,PREMIUM_AMOUNT                                      00789863
+                   ,PREMIUM_RECEIVED_DATE                               00789963
+                   ,BALANCE_AMOUNT                                      00790063
+                   ,NEXT_PREMIUM_DUE_DATE                               00790163
+               FROM PREMIUM_DETAILS                                     00790256
+           END-EXEC.                                                    00790356
+       01 WS01-VARS.                                                    00791002
+           05 WS05-FST-TI001         PIC 9(02).                         00800055
+           05 WS05-FST-TI002         PIC 9(02).                         00810055
+           05 WS05-FST-TO001         PIC 9(02).                         00820055
+           05 WS05-FST-TO002         PIC 9(02).                         00830055
+           05 WS05-FST-TO003         PIC 9(02).                         00831055
+           05 WS05-SQL-LRECL         PIC S9(04) COMP VALUE 80.          00832055
+           05 WS05-SQL-ERR-MSG.                                         00833048
+               10 WS10-ERR-LEN       PIC S9(04) COMP VALUE 800.         00834055
+               10 WS10-ERR-TXT       PIC X(80) OCCURS 10 TIMES.         00835055
+           05 WS05-ERROR-REASON      PIC X(21).                         00880055
+           05 WS05-POLICY-AMOUNT     PIC 9(10).                         00881055
+           05 WS05-POLICY-AMOUNT-GRP.                                   00881150
+               10 WS10-AMT-BILL      PIC X(01).                         00881265
+               10 WS10-AMT-LAKH      PIC X(03).                         00881365
+               10 WS10-AMT-THOU      PIC X(03).                         00881465
+               10 WS10-AMT-HUND      PIC X(03).                         00881565
+           05 WS05-PREMIUM-AMOUNT    PIC 9(10).                         00882055
+           05 WS05-EDIT-PREMIUM-AMT  PIC 9,999,999,999.                 00882155
+           05 WS05-BALANCE-AMOUNT    PIC 9(10).                         00883055
+           05 WS05-EDIT-BALANCE-AMT  PIC 9,999,999,999.                 00884055
+       PROCEDURE DIVISION.                                              00890002
+       0000-MAIN-PARA.                                                  00900002
+           PERFORM 1000-INIT-PARA                                       00910002
+               THRU 1000-INIT-PARA-EXIT                                 00920002
+           PERFORM 3000-PROC-PARA                                       00930002
+               THRU 3000-PROC-PARA-EXIT                                 00940002
+           PERFORM 9000-TERM-PARA                                       00950002
+               THRU 9000-TERM-PARA-EXIT                                 00960002
+           .                                                            00970002
+       1000-INIT-PARA.                                                  00980002
+           CONTINUE                                                     00990002
+           .                                                            01000002
+       1000-INIT-PARA-EXIT.                                             01010002
+           EXIT                                                         01020002
+           .                                                            01030002
+       3000-PROC-PARA.                                                  01040002
+           PERFORM 3100-OPEN-PARA                                       01050002
+               THRU 3100-OPEN-PARA-EXIT                                 01060002
+           PERFORM 3200-READ1-PARA                                      01070047
+               THRU 3200-READ1-PARA-EXIT                                01080047
+                   UNTIL WS05-FST-TI001 = 10                            01090002
+           PERFORM 3300-READ2-PARA                                      01091047
+               THRU 3300-READ2-PARA-EXIT                                01092047
+                   UNTIL WS05-FST-TI002 = 10                            01093047
+           PERFORM 3400-CURSOR-OPEN-PARA                                01094056
+               THRU 3400-CURSOR-OPEN-PARA-EXIT                          01095056
+           PERFORM 3500-FETCH-PARA                                      01096056
+               THRU 3500-FETCH-PARA-EXIT                                01097056
+                   UNTIL SQLCODE = +100                                 01098056
+           PERFORM 3600-CLOSE-PARA                                      01100056
+               THRU 3600-CLOSE-PARA-EXIT                                01110056
+           .                                                            01120002
+       3000-PROC-PARA-EXIT.                                             01130002
+           EXIT                                                         01140002
+           .                                                            01150002
+       9000-TERM-PARA.                                                  01160002
+           STOP RUN                                                     01170002
+           .                                                            01180002
+       9000-TERM-PARA-EXIT.                                             01190002
+           EXIT                                                         01200002
+           .                                                            01210002
+       3100-OPEN-PARA.                                                  01220002
+           OPEN INPUT TI001-PS                                          01230002
+           EVALUATE TRUE                                                01240002
+           WHEN WS05-FST-TI001 = 00                                     01250002
+               DISPLAY 'TI001 OPENED'                                   01260002
+           WHEN OTHER                                                   01270002
+               DISPLAY 'OPEN FAILED ' WS05-FST-TI001                    01280002
+               PERFORM 9000-TERM-PARA                                   01290002
+           END-EVALUATE                                                 01291002
+           OPEN INPUT TI002-PS                                          01300044
+           EVALUATE TRUE                                                01310002
+           WHEN WS05-FST-TI002 = 00                                     01320044
+               DISPLAY 'TI002 OPENED'                                   01330044
+           WHEN OTHER                                                   01340002
+               DISPLAY 'OPEN FAILED ' WS05-FST-TI002                    01350044
+               PERFORM 9000-TERM-PARA                                   01360002
+           END-EVALUATE                                                 01361002
+           OPEN OUTPUT TO001-PS                                         01370044
+           EVALUATE TRUE                                                01380002
+           WHEN WS05-FST-TO001 = 00                                     01390044
+               DISPLAY 'TO001 OPENED'                                   01400044
+           WHEN OTHER                                                   01410002
+               DISPLAY 'OPEN FAILED ' WS05-FST-TO001                    01420044
+               PERFORM 9000-TERM-PARA                                   01430002
+           END-EVALUATE                                                 01431002
+           OPEN OUTPUT TO002-PS                                         01440044
+           EVALUATE TRUE                                                01450002
+           WHEN WS05-FST-TO002 = 00                                     01460044
+               DISPLAY 'TO002 OPENED'                                   01470044
+           WHEN OTHER                                                   01480002
+               DISPLAY 'OPEN FAILED ' WS05-FST-TO002                    01490044
+               PERFORM 9000-TERM-PARA                                   01500002
+           END-EVALUATE                                                 01510002
+           OPEN OUTPUT TO003-KSDS                                       01511087
+           EVALUATE TRUE                                                01512044
+           WHEN WS05-FST-TO003 = 00                                     01513044
+               DISPLAY 'TO003 OPENED'                                   01514044
+           WHEN OTHER                                                   01515044
+               DISPLAY 'OPEN FAILED ' WS05-FST-TO003                    01516044
+               PERFORM 9000-TERM-PARA                                   01517044
+           END-EVALUATE                                                 01518044
+           .                                                            01518156
+       3100-OPEN-PARA-EXIT.                                             01530002
+           EXIT                                                         01540002
+           .                                                            01550002
+       3200-READ1-PARA.                                                 01560056
+           MOVE SPACES TO TI001-PS-REC TI002-PS-REC TO001-PS-REC        01570044
+                                       TO002-PS-REC TO003-KSDS-REC      01580044
+           READ TI001-PS                                                01581031
+           EVALUATE TRUE                                                01590002
+           WHEN WS05-FST-TI001 = 00                                     01600002
+               DISPLAY 'TI001 READ SUCCESSFUL'                          01610045
+               PERFORM 3210-VALIDATE1-PARA                              01620044
+                   THRU 3210-VALIDATE1-PARA-EXIT                        01630044
+           WHEN WS05-FST-TI001 = 10                                     01640002
+               DISPLAY 'ALL RECORDS ARE PROCESSED'                      01641002
+           WHEN OTHER                                                   01642002
+               DISPLAY 'TI001 READ FAILED ' WS05-FST-TI001              01650055
+           END-EVALUATE                                                 01660002
+           .                                                            01660147
+       3200-READ1-PARA-EXIT.                                            01660247
+           EXIT                                                         01660347
+           .                                                            01660447
+       3300-READ2-PARA.                                                 01660547
+           READ TI002-PS                                                01660845
+           EVALUATE TRUE                                                01661045
+           WHEN WS05-FST-TI002 = 00                                     01662045
+               DISPLAY 'TI002 READ SUCCESSFUL'                          01663045
+               PERFORM 3310-VALIDATE2-PARA                              01664047
+                   THRU 3310-VALIDATE2-PARA-EXIT                        01665047
+           WHEN WS05-FST-TI002 = 10                                     01666045
+               DISPLAY 'ALL RECORDS ARE PROCESSED'                      01667045
+           WHEN OTHER                                                   01668045
+               DISPLAY 'TI002 READ FAILED ' WS05-FST-TI002              01669055
+           END-EVALUATE                                                 01669145
+           .                                                            01670002
+       3300-READ2-PARA-EXIT.                                            01680047
+           EXIT                                                         01690002
+           .                                                            01700002
+       3210-VALIDATE1-PARA.                                             01710044
+           EVALUATE TRUE                                                01720002
+           WHEN TI001-POLICY-ID      IS GREATER THAN SPACES  AND        01730046
+                TI001-POLICY-CODE    IS GREATER THAN SPACES  AND        01740046
+                TI001-POLICY-NAME    IS GREATER THAN SPACES  AND        01750046
+                TI001-TYPE-OF-POLICY IS GREATER THAN SPACES  AND        01760046
+                (TI001-TERM = 'MONTHLY' OR                              01770055
+                TI001-TERM = 'QLY'      OR                              01770155
+                TI001-TERM = 'YEARLY')                       AND        01770247
+                TI001-POLICY-AMOUNT  IS GREATER THAN SPACES             01771055
+               PERFORM 3211-INSERT1-PARA                                01780047
+                   THRU 3211-INSERT1-PARA-EXIT                          01790047
+           WHEN OTHER                                                   01851002
+               DISPLAY 'INVALID RECORD ' TI001-PS-REC                   01852039
+           END-EVALUATE                                                 01860002
+           .                                                            01870002
+       3210-VALIDATE1-PARA-EXIT.                                        01880044
+           EXIT                                                         01890002
+           .                                                            01900002
+       3211-INSERT1-PARA.                                               01901048
+           INITIALIZE DCLINSURANCE-POLICY                               01902050
+           MOVE TI001-POLICY-ID        TO HV-POLICY-ID                  01902155
+           MOVE TI001-POLICY-CODE      TO HV-POLICY-CODE                01902255
+           MOVE TI001-POLICY-NAME      TO HV-POLICY-NAME                01902355
+           MOVE TI001-TYPE-OF-POLICY   TO HV-TYPE-OF-POLICY             01902455
+           MOVE TI001-TERM             TO HV-TERM                       01902555
+           MOVE TI001-POLICY-AMOUNT    TO HV-POLICY-AMOUNT              01902655
+           DISPLAY 'POLICY-ID: ' HV-POLICY-ID                           01902773
+           EXEC SQL                                                     01903048
+               INSERT INTO INSURANCE_POLICY VALUES(                     01904048
+                   :HV-POLICY-ID                                        01905048
+                  ,:HV-POLICY-CODE                                      01906048
+                  ,:HV-POLICY-NAME                                      01907048
+                  ,:HV-TYPE-OF-POLICY                                   01908048
+                  ,:HV-TERM                                             01909048
+                  ,:HV-POLICY-AMOUNT                                    01909148
+                  )                                                     01909248
+           END-EXEC.                                                    01909348
+           EVALUATE TRUE                                                01909448
+           WHEN SQLCODE = 00                                            01909548
+               DISPLAY 'INSURANCE_POLICY INSERT SUCCESSFUL'             01909648
+           WHEN OTHER                                                   01909748
+              DISPLAY 'INSURANCE_POLICY INSERT FAILED'                  01909848
+              CALL 'DSNTIAR' USING SQLCA WS05-SQL-ERR-MSG WS05-SQL-LRECL01909948
+              DISPLAY WS05-SQL-ERR-MSG                                  01910048
+           END-EVALUATE                                                 01910148
+           .                                                            01910248
+       3211-INSERT1-PARA-EXIT.                                          01910348
+           EXIT                                                         01910448
+           .                                                            01910548
+       3310-VALIDATE2-PARA.                                             01910649
+           EVALUATE TRUE                                                01910749
+           WHEN TI002-HOLDER-ID              IS GREATER THAN SPACES  AND01910849
+                TI002-HOLDER-NAME            IS GREATER THAN SPACES  AND01910949
+                TI002-POLICY-ID              IS GREATER THAN SPACES  AND01911049
+                TI002-POLICY-CODE            IS GREATER THAN SPACES  AND01911149
+                TI002-POLICY-NUMBER          IS NUMERIC AND             01911249
+                TI002-PREMIUM-AMOUNT         IS NUMERIC AND             01911349
+                TI002-PREMIUM-RECEIVED-DATE  IS GREATER THAN SPACES AND 01911549
+                TI002-NEXT-PREMIUM-DUE-DATE  IS GREATER THAN SPACES     01911649
+               PERFORM 3311-SELECT-PARA                                 01911749
+                   THRU 3311-SELECT-PARA-EXIT                           01911849
+           WHEN OTHER                                                   01912349
+               DISPLAY 'INVALID RECORD ' TI002-PS-REC                   01912449
+               PERFORM 3315-ERR-REASON-PARA                             01912566
+                   THRU 3315-ERR-REASON-PARA-EXIT                       01912666
+               PERFORM 3316-ERR-PS-WRITE-PARA                           01912766
+                   THRU 3316-ERR-PS-WRITE-PARA-EXIT                     01912866
+           END-EVALUATE                                                 01912949
+           .                                                            01913049
+       3310-VALIDATE2-PARA-EXIT.                                        01913149
+           EXIT                                                         01913249
+           .                                                            01913349
+       3311-SELECT-PARA.                                                01913450
+           MOVE TI002-POLICY-ID     TO HV-POLICY-ID                     01913676
+           DISPLAY 'POLICY-ID: ' HV-POLICY-ID                           01913872
+           EXEC SQL                                                     01913950
+               SELECT POLICY_AMOUNT                                     01914050
+               INTO :HV-POLICY-AMOUNT                                   01914169
+               FROM INSURANCE_POLICY                                    01914250
+               WHERE POLICY_ID = :HV-POLICY-ID                          01914369
+           END-EXEC.                                                    01914450
+           EVALUATE TRUE                                                01914550
+           WHEN SQLCODE = 00                                            01914650
+               DISPLAY 'PREMIUM RECORD SELECT SUCCESSFUL'               01914758
+               PERFORM 3312-COMPUTE-PARA                                01914850
+                   THRU 3312-COMPUTE-PARA-EXIT                          01914950
+           WHEN SQLCODE = +100                                          01915050
+               DISPLAY 'PREMIUM RECORD NOT FOUND'                       01915158
+           WHEN OTHER                                                   01915250
+              DISPLAY 'PREMIUM RECORD SELECT FAILED'                    01915358
+              CALL 'DSNTIAR' USING SQLCA WS05-SQL-ERR-MSG WS05-SQL-LRECL01915450
+              DISPLAY WS05-SQL-ERR-MSG                                  01915550
+           END-EVALUATE                                                 01915650
+           .                                                            01915750
+       3311-SELECT-PARA-EXIT.                                           01915850
+           EXIT                                                         01915950
+           .                                                            01916050
+       3312-COMPUTE-PARA.                                               01916150
+           MOVE TI002-PREMIUM-AMOUNT TO WS05-PREMIUM-AMOUNT             01916251
+           UNSTRING HV-POLICY-AMOUNT DELIMITED BY ','                   01916378
+           INTO WS10-AMT-BILL                                           01916450
+                WS10-AMT-LAKH                                           01916550
+                WS10-AMT-THOU                                           01916650
+                WS10-AMT-HUND                                           01916750
+           MOVE WS05-POLICY-AMOUNT-GRP TO WS05-POLICY-AMOUNT            01916850
+           SUBTRACT WS05-PREMIUM-AMOUNT FROM WS05-POLICY-AMOUNT GIVING  01916977
+                                       WS05-BALANCE-AMOUNT              01917077
+           PERFORM 3313-INSERT2-PARA                                    01917165
+               THRU 3313-INSERT2-PARA-EXIT                              01917265
+           .                                                            01917351
+       3312-COMPUTE-PARA-EXIT.                                          01917451
+           EXIT                                                         01917551
+           .                                                            01917651
+       3313-INSERT2-PARA.                                               01917751
+           INITIALIZE DCLPREMIUM-DETAILS                                01917851
+           MOVE TI002-HOLDER-ID             TO HV1-HOLDER-ID            01917951
+           MOVE TI002-HOLDER-NAME           TO HV1-HOLDER-NAME          01918051
+           MOVE TI002-POLICY-ID             TO HV1-POLICY-ID            01918151
+           MOVE TI002-POLICY-CODE           TO HV1-POLICY-CODE          01918251
+           MOVE TI002-POLICY-NUMBER         TO HV1-POLICY-NUMBER-TEXT   01918388
+           MOVE LENGTH OF                                               01918492
+                HV1-POLICY-NUMBER-TEXT      TO                          01918592
+                HV1-POLICY-NUMBER-LEN                                   01918692
+           MOVE HV-POLICY-AMOUNT            TO HV1-POLICY-AMOUNT        01918777
+           MOVE TI002-PREMIUM-AMOUNT        TO WS05-PREMIUM-AMOUNT      01918855
+           MOVE WS05-PREMIUM-AMOUNT         TO WS05-EDIT-PREMIUM-AMT    01918955
+           MOVE WS05-EDIT-PREMIUM-AMT       TO HV1-PREMIUM-AMOUNT       01919055
+           MOVE TI002-PREMIUM-RECEIVED-DATE TO HV1-PREMIUM-RECEIVED-DATE01919151
+           MOVE WS05-BALANCE-AMOUNT         TO WS05-EDIT-BALANCE-AMT    01919255
+           MOVE WS05-EDIT-BALANCE-AMT       TO HV1-BALANCE-AMOUNT       01919355
+           MOVE TI002-NEXT-PREMIUM-DUE-DATE TO HV1-NEXT-PREMIUM-DUE-DATE01919451
+           EXEC SQL                                                     01919551
+               INSERT INTO PREMIUM_DETAILS                              01919651
+               (                                                        01919751
+                  HOLDER_ID                                             01919851
+                  ,HOLDER_NAME                                          01919951
+                  ,POLICY_ID                                            01920051
+                  ,POLICY_CODE                                          01920151
+                  ,POLICY_NUMBER                                        01920251
+                  ,POLICY_AMOUNT                                        01920351
+                  ,PREMIUM_AMOUNT                                       01920451
+                  ,PREMIUM_RECEIVED_DATE                                01920551
+                  ,BALANCE_AMOUNT                                       01920651
+                  ,NEXT_PREMIUM_DUE_DATE                                01920751
+               )                                                        01920851
+               VALUES(                                                  01920951
+                   :HV1-HOLDER-ID                                       01921051
+                  ,:HV1-HOLDER-NAME                                     01921151
+                  ,:HV1-POLICY-ID                                       01921251
+                  ,:HV1-POLICY-CODE                                     01921351
+                  ,:HV1-POLICY-NUMBER                                   01921486
+                  ,:HV1-POLICY-AMOUNT                                   01921551
+                  ,:HV1-PREMIUM-AMOUNT                                  01921651
+                  ,:HV1-PREMIUM-RECEIVED-DATE                           01921751
+                  ,:HV1-BALANCE-AMOUNT                                  01921851
+                  ,:HV1-NEXT-PREMIUM-DUE-DATE                           01921951
+                  )                                                     01922051
+           END-EXEC.                                                    01922151
+           EVALUATE TRUE                                                01922251
+           WHEN SQLCODE = 00                                            01922351
+               DISPLAY 'PREMIUM_DETAILS INSERT SUCCESSFUL'              01922451
+               PERFORM 3314-KSDS-WRITE-PARA                             01922560
+                   THRU 3314-KSDS-WRITE-PARA-EXIT                       01922665
+           WHEN OTHER                                                   01922751
+              DISPLAY 'PREMIUM-DETAILS INSERT FAILED'                   01922851
+              CALL 'DSNTIAR' USING SQLCA WS05-SQL-ERR-MSG WS05-SQL-LRECL01922951
+              DISPLAY WS05-SQL-ERR-MSG                                  01923051
+           END-EVALUATE                                                 01923151
+           .                                                            01923251
+       3313-INSERT2-PARA-EXIT.                                          01923351
+           EXIT                                                         01923451
+           .                                                            01923551
+       3314-KSDS-WRITE-PARA.                                            01925859
+           MOVE TI002-HOLDER-ID              TO TO003-HOLDER-ID         01925958
+           MOVE TI002-POLICY-ID              TO TO003-POLICY-ID         01926058
+           MOVE TI002-PREMIUM-RECEIVED-DATE  TO                         01926158
+                TO003-PREMIUM-RECEIVED-DATE                             01926258
+           MOVE TI002-POLICY-CODE            TO TO003-POLICY-CODE       01926358
+           MOVE TI002-PREMIUM-AMOUNT         TO WS05-PREMIUM-AMOUNT     01926458
+           MOVE WS05-PREMIUM-AMOUNT          TO WS05-EDIT-PREMIUM-AMT   01926558
+           MOVE WS05-EDIT-PREMIUM-AMT        TO TO003-PREMIUM-AMOUNT    01926658
+           WRITE TO003-KSDS-REC                                         01926758
+           EVALUATE TRUE                                                01926858
+           WHEN WS05-FST-TO003 = 00                                     01926958
+               DISPLAY 'KSDS WRITE SUCCESSFUL'                          01927058
+           WHEN OTHER                                                   01927158
+               DISPLAY 'KSDS WRITE FAILED ' WS05-FST-TO003              01927258
+           END-EVALUATE                                                 01927358
+           .                                                            01927458
+       3314-KSDS-WRITE-PARA-EXIT.                                       01927566
+           EXIT                                                         01927658
+           .                                                            01927758
+       3315-ERR-REASON-PARA.                                            01927866
+           EVALUATE TRUE                                                01928024
+           WHEN TI002-HOLDER-ID = SPACES                                01930053
+               MOVE 'HOLDER_ID' TO WS05-ERROR-REASON                    01940053
+           END-EVALUATE                                                 01941016
+           EVALUATE TRUE                                                01942024
+           WHEN TI002-HOLDER-NAME = SPACES                              01943053
+               MOVE 'HOLDER_NAME' TO WS05-ERROR-REASON                  01960053
+           END-EVALUATE                                                 01961016
+           EVALUATE TRUE                                                01962024
+           WHEN TI002-POLICY-ID = SPACES                                01963053
+               MOVE 'POLICY_ID' TO WS05-ERROR-REASON                    01980053
+           END-EVALUATE                                                 01981016
+           EVALUATE TRUE                                                01982024
+           WHEN TI002-POLICY-CODE = SPACES                              01983053
+               MOVE 'POLICY_CODE' TO WS05-ERROR-REASON                  02000066
+           END-EVALUATE                                                 02000116
+           EVALUATE TRUE                                                02000253
+           WHEN TI002-POLICY-NUMBER IS NOT NUMERIC                      02000353
+               MOVE 'POLICY_NUMBER' TO WS05-ERROR-REASON                02000466
+           END-EVALUATE                                                 02000553
+           EVALUATE TRUE                                                02000653
+           WHEN TI002-PREMIUM-AMOUNT IS NOT NUMERIC                     02000753
+               MOVE 'PREMIUM_AMOUNT' TO WS05-ERROR-REASON               02000866
+           END-EVALUATE                                                 02000953
+           EVALUATE TRUE                                                02001053
+           WHEN TI002-PREMIUM-RECEIVED-DATE = SPACES                    02002053
+               MOVE 'PREMIUM_RECEIVED_DATE' TO WS05-ERROR-REASON        02003066
+           END-EVALUATE                                                 02004053
+           EVALUATE TRUE                                                02005053
+           WHEN TI002-NEXT-PREMIUM-DUE-DATE = SPACES                    02006053
+               MOVE 'NEXT_PREMIUM_DUE_DATE' TO WS05-ERROR-REASON        02007066
+           END-EVALUATE                                                 02008053
+           .                                                            02020002
+       3315-ERR-REASON-PARA-EXIT.                                       02030066
+           EXIT                                                         02040002
+           .                                                            02050002
+       3316-ERR-PS-WRITE-PARA.                                          02060066
+           MOVE TI002-HOLDER-ID             TO TO001-HOLDER-ID          02070053
+           MOVE TI002-HOLDER-NAME           TO TO001-HOLDER-NAME        02080053
+           MOVE TI002-POLICY-ID             TO TO001-POLICY-ID          02090053
+           MOVE TI002-POLICY-CODE           TO TO001-POLICY-CODE        02100053
+           MOVE TI002-POLICY-NUMBER         TO TO001-POLICY-NUMBER      02110053
+           MOVE TI002-PREMIUM-AMOUNT        TO TO001-PREMIUM-AMOUNT     02120053
+           MOVE TI002-PREMIUM-RECEIVED-DATE TO                          02121053
+                TO001-PREMIUM-RECEIVED-DATE                             02122053
+           MOVE TI002-NEXT-PREMIUM-DUE-DATE TO                          02123053
+                TO001-NEXT-PREMIUM-DUE-DATE                             02124053
+           MOVE WS05-ERROR-REASON           TO TO001-ERROR-REASON       02125053
+           WRITE TO001-PS-REC                                           02130053
+           EVALUATE TRUE                                                02140002
+           WHEN WS05-FST-TO001 = 00                                     02150053
+               DISPLAY 'ERROR_REASON WRITTEN'                           02160053
+           WHEN OTHER                                                   02170002
+               DISPLAY 'ERROR_REASON WRITE FAILED ' WS05-FST-TO001      02180053
+           END-EVALUATE                                                 02190002
+           .                                                            02200002
+       3316-ERR-PS-WRITE-PARA-EXIT.                                     02210066
+           EXIT                                                         02220002
+           .                                                            02230002
+       3400-CURSOR-OPEN-PARA.                                           02240056
+           EXEC SQL                                                     02250056
+               OPEN MFRP                                                02260056
+           END-EXEC.                                                    02270056
+           EVALUATE TRUE                                                02280056
+           WHEN SQLCODE = 00                                            02290056
+               DISPLAY 'MFRP CURSOR OPENED'                             02300056
+               PERFORM 3500-FETCH-PARA                                  02310056
+                   THRU 3500-FETCH-PARA-EXIT                            02320056
+           WHEN OTHER                                                   02330056
+              DISPLAY 'MFRP CURSOR OPEN FAILED: '                       02340056
+              CALL 'DSNTIAR' USING SQLCA WS05-SQL-ERR-MSG WS05-SQL-LRECL02350056
+              DISPLAY WS05-SQL-ERR-MSG                                  02360056
+              PERFORM 9000-TERM-PARA                                    02370056
+                   THRU 9000-TERM-PARA-EXIT                             02380056
+           END-EVALUATE                                                 02390056
+           .                                                            02400056
+       3400-CURSOR-OPEN-PARA-EXIT.                                      02410056
+           EXIT                                                         02420056
+           .                                                            02430056
+       3500-FETCH-PARA.                                                 02440056
+           EXEC SQL                                                     02460056
+               FETCH MFRP INTO                                          02470056
+                   :HV1-HOLDER-ID                                       02480061
+                   ,:HV1-HOLDER-NAME                                    02490062
+                   ,:HV1-POLICY-ID                                      02500062
+                   ,:HV1-POLICY-CODE                                    02510064
+                   ,:HV1-POLICY-NUMBER                                  02520062
+                   ,:HV1-POLICY-AMOUNT                                  02530062
+                   ,:HV1-PREMIUM-AMOUNT                                 02540062
+                   ,:HV1-PREMIUM-RECEIVED-DATE                          02550062
+                   ,:HV1-BALANCE-AMOUNT                                 02560062
+                   ,:HV1-NEXT-PREMIUM-DUE-DATE                          02570062
+           END-EXEC.                                                    02571056
+           EVALUATE TRUE                                                02572056
+           WHEN SQLCODE = 00                                            02573056
+               DISPLAY 'POLICY-ID: ' HV1-POLICY-ID                      02573194
+               DISPLAY 'PREMIUM_DETAILS FETCH SUCCESSFUL'               02574056
+               PERFORM 3510-TEMP-PS-WRITE-PARA                          02575056
+                   THRU 3510-TEMP-PS-WRITE-PARA-EXIT                    02576056
+           WHEN SQLCODE = +100                                          02577056
+               DISPLAY 'END OF THE TABLE'                               02578056
+           WHEN OTHER                                                   02579056
+              DISPLAY 'PREMIUM_DETAILS FETCH FAILED'                    02579156
+              CALL 'DSNTIAR' USING SQLCA WS05-SQL-ERR-MSG WS05-SQL-LRECL02579256
+              DISPLAY WS05-SQL-ERR-MSG                                  02579356
+           END-EVALUATE                                                 02579456
+           .                                                            02579556
+       3500-FETCH-PARA-EXIT.                                            02579656
+           EXIT                                                         02579756
+           .                                                            02579856
+       3510-TEMP-PS-WRITE-PARA.                                         02580056
+           MOVE HV1-HOLDER-ID             TO TO002-HOLDER-ID            02590065
+           MOVE HV1-HOLDER-NAME           TO TO002-HOLDER-NAME          02600065
+           MOVE HV1-POLICY-ID             TO TO002-POLICY-ID            02610065
+           MOVE HV1-POLICY-CODE           TO TO002-POLICY-CODE          02620067
+           MOVE HV1-POLICY-NUMBER-TEXT    TO TO002-POLICY-NUMBER        02630093
+           MOVE HV1-POLICY-AMOUNT         TO TO002-POLICY-AMOUNT        02640065
+           MOVE HV1-PREMIUM-AMOUNT        TO TO002-PREMIUM-AMOUNT       02650065
+           MOVE HV1-PREMIUM-RECEIVED-DATE TO TO002-PREMIUM-RECEIVED-DATE02660056
+           MOVE HV1-BALANCE-AMOUNT        TO TO002-BALANCE-AMOUNT       02661065
+           MOVE HV1-NEXT-PREMIUM-DUE-DATE TO TO002-NEXT-PREMIUM-DUE-DATE02670056
+           WRITE TO002-PS-REC                                           02690056
+           EVALUATE TRUE                                                02700006
+           WHEN WS05-FST-TO002 = 00                                     02710056
+               DISPLAY 'TEMP-PS RECORD WRITTEN'                         02720056
+           WHEN OTHER                                                   02730006
+               DISPLAY 'TEMP-PS RECORD WRITE FAILED ' WS05-FST-TO002    02740056
+           END-EVALUATE                                                 02750006
+           .                                                            02760006
+       3510-TEMP-PS-WRITE-PARA-EXIT.                                    02770057
+           EXIT                                                         02780007
+           .                                                            02790007
+       3600-CLOSE-PARA.                                                 02930056
+           EXEC SQL                                                     02931056
+               CLOSE MFRP                                               02932056
+           END-EXEC.                                                    02933056
+           CLOSE TI001-PS TI002-PS TO001-PS TO002-PS TO003-KSDS         02940056
+           .                                                            02950007
+       3600-CLOSE-PARA-EXIT.                                            02960056
+           EXIT                                                         02970007
+           .                                                            02980007

@@ -1,0 +1,13 @@
+//TECN007A JOB NOTIFY=&SYSUID                                           00010000
+//STEP1    EXEC PGM=IDCAMS                                              00020000
+//SYSPRINT DD SYSOUT=*                                                  00030000
+//SYSIN    DD *                                                         00040000
+   DEFINE CLUSTER (                 -                                   00050000
+   NAME(TECN007.L1L.STUDENT.ESDS)   -                                   00060000
+   TRACK(10,10)                     -                                   00070000
+   RECORDSIZE(80,80)                -                                   00080000
+   VOLUME(ZAPRD7)                   -                                   00090000
+   CONTROLINTERVALSIZE(512)         -                                   00100000
+   NONINDEXED                       -                                   00110000
+   )                                                                    00120000
+/*                                                                      00130000

@@ -1,0 +1,23 @@
+//TECN007A JOB NOTIFY=&SYSUID                                           00010000
+//STEP1    EXEC PGM=IEFBR14                                             00020000
+//DD1      DD DSN=TECN007.L1L.STUDENT.PS2,                              00030000
+//            DISP=(MOD,DELETE,DELETE),                                 00040000
+//            SPACE=(TRK,(1,1)),                                        00050000
+//            VOLUME=SER=ZAPRD7,                                        00060000
+//            DCB=(LRECL=80,BLKSIZE=800,RECFM=FB,DSORG=PS)              00070000
+//SYSIN    DD DUMMY                                                     00080000
+//SYSPRINT DD SYSOUT=*                                                  00090000
+//STEP2    EXEC PGM=SORT                                                00100000
+//SYSOUT   DD SYSOUT=*                                                  00110000
+//SYSPRINT DD SYSOUT=*                                                  00120000
+//SORTIN   DD DSN=TECN007.L1L.STUDENT.PS1,DISP=SHR                      00130000
+//SORTOUT  DD DSN=TECN007.L1L.STUDENT.PS2,                              00140000
+//         DISP=(NEW,CATLG,DELETE),                                     00142000
+//         SPACE=(TRK,(1,1)),                                           00143000
+//         VOLUME=SER=ZAPRD7,                                           00144000
+//         DCB=(LRECL=80,BLKSIZE=800,RECFM=FB,DSORG=PS)                 00145000
+//SYSIN    DD *                                                         00150000
+    SORT FIELDS=(1,5,CH,A),EQUALS                                       00160000
+    SUM FIELDS=NONE                                                     00161000
+    INCLUDE COND=(1,1,CH,EQ,C'S')                                       00170000
+/*                                                                      00180000

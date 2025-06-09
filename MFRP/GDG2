@@ -1,0 +1,52 @@
+//TECN007A JOB NOTIFY=&SYSUID                                           00010001
+//STEP001  EXEC PGM=IEBGENER                                            00020001
+//SYSPRINT DD SYSOUT=*                                                  00030001
+//SYSIN    DD DUMMY                                                     00040001
+//SYSUT1   DD DSN=TECN007.INSURNCE.POLICY.PS,DISP=SHR                   00050001
+//SYSUT2   DD DSN=TECN007.INSURNCE.POLICY.PS.GDG(+1),                   00060001
+//            DISP=(NEW,CATLG,DELETE),                                  00070001
+//            VOLUME=SER=ZAPRD7,SPACE=(TRK,(10,10)),                    00080001
+//            DCB=(RECFM=FB,LRECL=100,BLKSIZE=1000)                     00090002
+//STEP002  EXEC PGM=IEBGENER                                            00100001
+//SYSPRINT DD SYSOUT=*                                                  00110001
+//SYSIN    DD DUMMY                                                     00120001
+//SYSUT1   DD DSN=TECN007.PREMIUM.DETAILS.PS,DISP=SHR                   00130001
+//SYSUT2   DD DSN=TECN007.PREMIUM.DETAILS.PS.GDG(+1),                   00140001
+//            DISP=(NEW,CATLG,DELETE),                                  00150001
+//            VOLUME=SER=ZAPRD7,SPACE=(TRK,(10,10)),                    00160001
+//            DCB=(RECFM=FB,LRECL=100,BLKSIZE=1000)                     00170001
+//STEP003  EXEC PGM=IEBGENER                                            00180001
+//SYSPRINT DD SYSOUT=*                                                  00190001
+//SYSIN    DD DUMMY                                                     00200001
+//SYSUT1   DD DSN=TECN007.PREMIUM.ERROR.OUT.PS,DISP=SHR                 00210001
+//SYSUT2   DD DSN=TECN007.PREMIUM.ERROR.OUT.PS.GDG(+1),                 00220001
+//            DISP=(NEW,CATLG,DELETE),                                  00230001
+//            VOLUME=SER=ZAPRD7,SPACE=(TRK,(10,10)),                    00240001
+//            DCB=(RECFM=FB,LRECL=150,BLKSIZE=1500)                     00250001
+//STEP004  EXEC PGM=IEBGENER                                            00260001
+//SYSPRINT DD SYSOUT=*                                                  00270001
+//SYSIN    DD DUMMY                                                     00280001
+//SYSUT1   DD DSN=TECN007.PREMIUM.TEMP.OUT.PS,DISP=SHR                  00290001
+//SYSUT2   DD DSN=TECN007.PREMIUM.TEMP.OUT.PS.GDG(+1),                  00300001
+//            DISP=(NEW,CATLG,DELETE),                                  00310001
+//            VOLUME=SER=ZAPRD7,SPACE=(TRK,(10,10)),                    00320001
+//            DCB=(RECFM=FB,LRECL=150,BLKSIZE=1500)                     00330001
+//STEP005  EXEC PGM=IDCAMS                                              00340004
+//SYSPRINT DD SYSOUT=*                                                  00350001
+//SYSUT1   DD DSN=TECN007.MASTER.PREMIUM.KSDS,DISP=SHR                  00370001
+//SYSUT2   DD DSN=TECN007.MASTER.PREMIUM.KSDS.GDG(+1),                  00380001
+//            DISP=(NEW,CATLG,DELETE),                                  00390001
+//            VOLUME=SER=ZAPRD7,SPACE=(TRK,(10,10)),                    00400001
+//            DCB=(RECFM=FB,LRECL=100,BLKSIZE=1000)                     00410001
+//SYSIN    DD *                                                         00411004
+  REPRO INFILE(SYSUT1) OUTFILE(SYSUT2)                                  00412004
+/*                                                                      00414004
+//STEP006  EXEC PGM=IEBGENER                                            00420003
+//SYSPRINT DD SYSOUT=*                                                  00430003
+//SYSIN    DD DUMMY                                                     00440003
+//SYSUT1   DD DSN=TECN007.REPORT.PS,DISP=SHR                            00450003
+//SYSUT2   DD DSN=TECN007.REPORT.PS.GDG(+1),                            00460003
+//            DISP=(NEW,CATLG,DELETE),                                  00470003
+//            VOLUME=SER=ZAPRD7,SPACE=(TRK,(10,10)),                    00480003
+//            DCB=(RECFM=FB,LRECL=80,BLKSIZE=800)                       00490003
+
