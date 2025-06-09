@@ -1,0 +1,34 @@
+REFORMATTING IN SORT UTILITY:
+
+FIELDS ----> INREC/OUTREC
+BUILD -----> INREC/OUTREC
+OVERLAY ----> INREC/OUTREC
+
+INREC ----> It works between the SORTIN and sortwork file (BEFORE SORTING)
+OUTREC -----> It works between the sortwork file and SORTOUT (AFTER SORTING)
+
+1001 TOMMY CHENNAI 50000
+
+1) The output should be 
+   1001 TOMMY CHENNAI 50000 TOMCHE@CTS.COM
+
+EXAMPLE:
+
+//SYSIN DD *
+  SORT FIELDS=(1,4,CH,A)
+  INREC FIELDS=(1,26,6,3,12,3,C'@CTS.COM',40X)   ---> (27:,6,3,12,3,C'@CTS.COM',40X) --> These are different.
+/*
+
+  X-Space
+  40X ---> (LRECL-Total length of the record used)=(80-40)
+
+
+2) The output should be
+   1001 TOMMY CHENNAI 50000 50,200
+
+
+//SYSIN DD *
+  SORT FIELDS=COPY
+  INREC OVERLAY=(28:,21,5,ZD,ADD,+00200,EDIT=(TT,TTTT),44X)
+/*
+ 

@@ -1,0 +1,19 @@
+A group item cannot have PIC in COBOL. It can have any number of member items. A member item can also be a sub-group item.
+Any level number is a member of its immediate, previous, lower level number.
+  
+A group item or sub-group item can have VALUE clause. The values will be assigned to the members starting from the leftmost character to the firstmost member.
+
+77 - elementary datatype -efficient in handling memory - (can be used in sub-program) - it allocates the specific amount of memory mentioned
+
+05 A          05 A         ---> (05 E OF A)
+   10 C          10 C
+   10 D          10 D
+   10 E          10 E
+
+Assigning values:
+
+1.VALUE clause (in DATA DIVISION)
+2.ACCEPT (in PROCEDURE DIVISION)
+3.MOVE (in PROCEDURE DIVISION)
+
+   

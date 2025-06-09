@@ -1,0 +1,31 @@
+//TECN007A JOB NOTIFY=&SYSUID,TIME=5                                    00010000
+// JCLLIB ORDER=TECN007.VSAM.CC02.PDS                                   00020000
+//STEP010  EXEC PROC=ESDSCRT                                            00030000
+//STEP020  EXEC PGM=IDCAMS                                              00040000
+//SYSPRINT DD   SYSOUT=*                                                00050000
+//SYSIN    DD   *                                                       00060000
+  REPRO INDATASET(TECN007.VSAM.CC02.PS1)-                               00070000
+        OUTDATASET(TECN007.VSAM.CC02.ESDS)-                             00080001
+        COUNT(3)                                                        00081002
+/*                                                                      00082001
+//STEP030  EXEC PGM=IDCAMS                                              00083003
+//SYSPRINT DD   SYSOUT=*                                                00084003
+//SYSIN    DD   *                                                       00085003
+  DEFINE AIX(-                                                          00086003
+   NAME(TECN007.VSAM.CC02.ESDS.AIX)-                                    00087003
+   RELATE(TECN007.VSAM.CC02.ESDS)-                                      00088003
+   KEYS(20,6)-                                                          00089003
+   TRACK(10,10)-                                                        00090003
+   VOLUME(ZAPRD7)-                                                      00100003
+   RECORDSIZE(80,80)-                                                   00110003
+   CONTROLINTERVALSIZE(512)-                                            00120003
+   FREESPACE(10,10)-                                                    00130003
+   UNIQUEKEY)                                                           00140003
+/*                                                                      00150004
+//STEP040  EXEC PGM=IDCAMS                                              00160003
+//SYSPRINT DD   SYSOUT=*                                                00170003
+//SYSIN    DD   *                                                       00180003
+  BLDINDEX-                                                             00190003
+   INDATASET(TECN007.VSAM.CC02.ESDS)-                                   00200003
+   OUTDATASET(TECN007.VSAM.CC02.ESDS.AIX)                               00210003
+/*                                                                      00220004

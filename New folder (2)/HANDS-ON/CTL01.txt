@@ -1,0 +1,7 @@
+  DEFINE CLUSTER(-                                                      00010000
+   NAME(TECN007.VSAM.CC02.ESDS)-                                        00020000
+   TRACK(10,10)-                                                        00030000
+   VOLUME(ZAPRD7)-                                                      00040000
+   RECORDSIZE(80,80)-                                                   00050000
+   CONTROLINTERVALSIZE(512)-                                            00060000
+   NONINDEXED)                                                          00070000
